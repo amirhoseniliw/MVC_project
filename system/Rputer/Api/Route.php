@@ -1,5 +1,5 @@
 <?php 
-namespace System\Router\Web;
+namespace System\Router\Api;
 class Route {
     public static function get($url , $executeMethod , $name = null){
        $executeMethod =  explode('@' , $executeMethod);
