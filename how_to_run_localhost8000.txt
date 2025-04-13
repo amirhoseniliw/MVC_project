@@ -1,0 +1,6 @@
+if yuo want run localhost:8000 most run to
+ this code {
+            cd ../
+            php -S localhost:8000 -t MVC_project
+}
+in your terminal
