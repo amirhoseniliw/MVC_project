@@ -28,7 +28,18 @@ class Routing {
      if(sizeof($reservedRouteUrlArray )!= sizeof($this->current_route)){
         return false ;
      }
-    }
+     //? part 3 
+     foreach ($this->current_route as $key => $currentRouteElement) {
+        $reservedRouteUrlElement = $reservedRouteUrlArray[$key];
+        if( substr($reservedRouteUrlElement , 0 , 1) == "{" && substr($reservedRouteUrlElement , -1) == "}"){
+            array_push($this->values , $currentRouteElement);
+        }
+        elseif($reservedRouteUrlElement != $currentRouteElement){
+            return false;
+        }
+     }
+     return true ;
+    }  
     public function error404 (){
         http_response_code(404);
         include __DIR__ .DIRECTORY_SEPARATOR . 'Viwe' .DIRECTORY_SEPARATOR . 'index.html';
