@@ -18,8 +18,9 @@ class Routing {
         if(empty($match)){
             $this->error404();
         }
+     
         $classPath =  str_replace('\\' , '/' , $match['class']);
-        $path = BASE_DIR . "/App/Http/Controllers" . $classPath . ".php";
+        $path = BASE_DIR . "/app/Http/Controllers/" . $classPath . ".php";
         if(!file_exists($path)){
             $this->error404();
         }
@@ -76,7 +77,7 @@ class Routing {
     }  
     public function error404 (){
         http_response_code(404);
-        include __DIR__ .DIRECTORY_SEPARATOR . 'Viwe' .DIRECTORY_SEPARATOR . 'index.html';
+        include __DIR__ .DIRECTORY_SEPARATOR . 'Viwe' .DIRECTORY_SEPARATOR . 'index.php';
         exit ;
     }
     public function methodField(){

@@ -13,7 +13,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
     />
     <!-- Start Custom Css -->
-    <link rel="stylesheet" href="./Assets/CustomCssJs/Style.css" />
+    <link rel="stylesheet" href="<?php echo (dirname(__DIR__) . "/system/Roter/Viwe/Assets/CustomCssJs/Style.css" ) ?>" />
     <!-- End Custom Css -->
   </head>
 
