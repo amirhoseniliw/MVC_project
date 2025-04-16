@@ -13,10 +13,27 @@ class Routing {
         $this->routes = $routes ;
     }
     public function run () {
-
+        $match = $this->match();
+        if(empty($match)){
+            $this->error404();
+        }
+        $classPath =  str_replace('\\' , '/' , $match['class']);
+        $path = BASE_DIR . "/App/Http/Controllers" . $classPath . ".php";
+        if(!file_exists($path)){
+            $this->error404();
+        }
     }
     public function match () {
-      
+      $reservedRoutes = $this->routes[$this->method_field];
+      foreach ($reservedRoutes as $reservedRoute){
+        if($this->compare($reservedRoute['url']) == true){
+            return ["class" => $reservedRoute['class'] , "method" => $reservedRoute['method']];
+        }
+        else {
+            $this->values = [];
+        }
+      }
+      return [];
     }
     private function compare($reservedRouteUrl){
      //? part 1
