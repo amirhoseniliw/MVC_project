@@ -70,5 +70,8 @@ trait HasQueryBuilder {
         if(!empty($this->limit)){
             $query .= ' LIMIT ' . $this->limit['from'] . ' , ' . $this->limit['number'] . ' ';
         }
+        $query .= ' ;';
+        echo $query . '<hr/>' ;
+        
     }
 }
