@@ -17,4 +17,17 @@ trait HasQueryBuilder {
     protected function resetSql(){
         $this->sql =  '';
     }
+    protected function setWhere ($operator , $condition){
+        $array = ['operator' => $operator , 'condition' => $condition];
+        array_push($this->where , $array);
+    }
+    protected function resetWhere(){
+        $this->where =  [];
+    }
+    protected function setOrderBy($name , $expression){
+        array_push($this->orderBy , $name . " " . $expression);
+    }
+    protected function resetOrderBy(){
+        $this->orderBy =  [];
+    }
 }
