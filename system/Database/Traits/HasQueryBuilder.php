@@ -65,13 +65,21 @@ trait HasQueryBuilder {
             $query .= ' WHERE ' . $WhereString;
         }
         if(!empty($this->orderBy)){
-            $query .= 'ORDER BY' . implode(', ' , $this->orderBy);
+            $query .= ' ORDER BY' . implode(', ' , $this->orderBy);
         }
         if(!empty($this->limit)){
             $query .= ' LIMIT ' . $this->limit['from'] . ' , ' . $this->limit['number'] . ' ';
         }
         $query .= ' ;';
         echo $query . '<hr/>' ;
-        
+      $pdoInstance = DBConnection::getDBConnectionInstance();
+      $statement =  $pdoInstance->prepare($query);
+      if(sizeof($this->bindValues) > sizeof($this->values)){
+        sizeof($this->bindValues) > 0 ? $statement->execute($this->bindValues) : $statement->execute();
+      }
+      else{
+        sizeof($this->values) > 0 ? $statement->execute(array_values($this->values)) : $statement->execute();
+      }
+     return $statement ;
     }
 }
