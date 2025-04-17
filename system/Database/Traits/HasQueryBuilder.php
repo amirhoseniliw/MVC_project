@@ -30,4 +30,27 @@ trait HasQueryBuilder {
     protected function resetOrderBy(){
         $this->orderBy =  [];
     }
+    protected function setLimit($from , $number){
+       $this->limit['from'] = (int) $from ;
+       $this->limit['number'] = (int) $number ;
+    }
+    protected function resetLimit(){
+       unset($this->limit['from']) ;
+       unset($this->limit['number']) ;
+    }
+    protected function addValue($attribute , $value){
+        $this->values[$attribute] = $value ;
+        array_push($this->bindValues , $value);
+    }
+    protected function removeValues (){
+        $this->values = [];
+        $this->bindValues = [];
+    }
+    protected function resetQuery (){
+        $this->resetSql();
+        $this->resetWhere();
+        $this->resetOrderBy();
+        $this->resetLimit();
+        $this->removeValues();
+    }
 }
