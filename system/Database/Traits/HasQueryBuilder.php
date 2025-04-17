@@ -53,4 +53,22 @@ trait HasQueryBuilder {
         $this->resetLimit();
         $this->removeValues();
     }
+    protected function executeQuery(){
+        $query = '';
+        $query .= $this->sql;
+        if(!empty($this->where)){
+            $WhereString = '';
+            foreach ($this->where as $where){
+                $WhereString == '' ? $WhereString .= $where['condition'] : $WhereString .= ' ' . $where['operator'] . ' ' . $where['condition'];
+
+            }
+            $query .= ' WHERE ' . $WhereString;
+        }
+        if(!empty($this->orderBy)){
+            $query .= 'ORDER BY' . implode(', ' , $this->orderBy);
+        }
+        if(!empty($this->limit)){
+            $query .= ' LIMIT ' . $this->limit['from'] . ' , ' . $this->limit['number'] . ' ';
+        }
+    }
 }
