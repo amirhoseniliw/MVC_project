@@ -7,5 +7,14 @@ use System\Database\Traits\HasQueryBuilder ;
 use System\Database\Traits\HasRelation ;
 
 abstract class Model {
-    use HasAtrbutes , HasCRUD , HasMethodCaller , HasQueryBuilder , HasRelation  ;
+    use HasAttributes , HasCRUD , HasMethodCaller , HasQueryBuilder , HasRelation  ;
+    protected $table;
+    protected $fillable = [];
+    protected $hidden = [];
+    protected $casts = [];
+    protected $primaryKey = 'id';
+    protected $createdAt = 'created_at';
+    protected $updatedAt = 'updated_at';
+    protected $deletedAt = null;
+    protected $collection = [];
 }

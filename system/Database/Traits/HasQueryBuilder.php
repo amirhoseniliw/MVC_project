@@ -25,7 +25,7 @@ trait HasQueryBuilder {
         $this->where =  [];
     }
     protected function setOrderBy($name , $expression){
-        array_push($this->orderBy , $name . " " . $expression);
+        array_push($this->orderBy , $this->getAttributeName($name) . " " . $expression);
     }
     protected function resetOrderBy(){
         $this->orderBy =  [];
@@ -84,7 +84,7 @@ trait HasQueryBuilder {
     }
     protected function getCount (){
         $query = '';
-        $query .= "SELECT COUNT(*) FROM $this->table";
+        $query .= "SELECT COUNT(". $this->getTableName() .".*) FROM " . $this->getTableName();
         if(!empty($this->where)){
             $WhereString = '';
             foreach ($this->where as $where){
