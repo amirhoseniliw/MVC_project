@@ -106,4 +106,14 @@ trait HasQueryBuilder {
      return $statement->fetchColumn();
 
     }
+    protected function getTableName(){
+
+        return ' `'.$this->table.'`';
+    }
+    
+    protected function getAttributeName($attribute){
+
+        return ' `'.$this->table.'`.`'.$attribute.'` ';
+    }
+    
 }
