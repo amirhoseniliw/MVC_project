@@ -59,6 +59,21 @@ trait HasCRUD{
         $this->setAllowedMethods(['where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate']);
         return $this;
     }
+    protected function whereOrMethod($attribute, $firstValue, $secondValue = null){
+        
+        if($secondValue === null){
+            $condition = $this->getAttributeName($attribute).' = ?';
+            $this->addValue($attribute, $firstValue);
+        }
+        else{
+            $condition = $this->getAttributeName($attribute).' '.$firstValue.' ?';
+            $this->addValue($attribute, $secondValue);
+        }
+        $operator = 'OR';
+        $this->setWhere($operator, $condition);
+        $this->setAllowedMethods(['where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate']);
+        return $this;
+    }
     protected function saveMethod(){
 
         $fillString = $this->fill();
