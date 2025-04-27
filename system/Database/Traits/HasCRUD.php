@@ -74,6 +74,23 @@ trait HasCRUD{
         $this->setAllowedMethods(['where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate']);
         return $this;
     }
+    protected function whereNullMethod($attribute){
+    
+        $condition =  $this->getAttributeName($attribute).' IS NULL ';
+        $operator = 'AND';
+        $this->setWhere($operator, $condition);
+        $this->setAllowedMethods(['where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate']);
+        return $this;
+    }
+
+    protected function whereNotNullMethod($attribute){
+    
+        $condition =  $this->getAttributeName($attribute).' IS NOT NULL ';
+        $operator = 'AND';
+        $this->setWhere($operator, $condition);
+        $this->setAllowedMethods(['where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate']);
+        return $this;
+    }
     protected function saveMethod(){
 
         $fillString = $this->fill();
