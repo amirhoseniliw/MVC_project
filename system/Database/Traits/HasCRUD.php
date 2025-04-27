@@ -20,7 +20,18 @@ trait HasCRUD{
         $object->addValue($object->primaryKey, $object->{$object->primaryKey});
         return $object->executeQuery();
     }
-    
+    protected function allMethod(){
+
+        $this->setSql("SELECT * FROM ".$this->getTableName());
+        $statement = $this->executeQuery();
+        $data = $statement->fetchAll();
+        if ($data){
+
+           $this->arrayToObjects($data);
+           return $this->collection;
+        }
+        return [];
+    }
     protected function saveMethod(){
 
         $fillString = $this->fill();
