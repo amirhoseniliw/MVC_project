@@ -91,6 +91,21 @@ trait HasCRUD{
         $this->setAllowedMethods(['where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate']);
         return $this;
     }
+    protected function whereInMethod($attribute, $values){
+
+        if(is_array($values)){
+            $valuesArray = [];
+            foreach($values as $value){
+                $this->addValue($attribute, $value);
+                array_push($valuesArray, '?');
+            }
+            $condition =  $this->getAttributeName($attribute).' IN ('.implode(' , ', $valuesArray).')';
+            $operator = 'AND';
+            $this->setWhere($operator, $condition);
+            $this->setAllowedMethods(['where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate']);
+            return $this;
+        }
+    }
     protected function saveMethod(){
 
         $fillString = $this->fill();
