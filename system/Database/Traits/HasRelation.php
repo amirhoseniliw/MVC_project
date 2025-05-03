@@ -8,7 +8,7 @@ trait HasRelation
 
     protected function hasOne($model, $foreignKey, $localKey){
         if($this->{$this->primaryKey}){
-            $modelObject = new $model;
+            $modelObject = new $model();
             return $modelObject->getHasOneRelation($this->table, $foreignKey, $localKey, $this->$localKey);
         }
     }
@@ -28,7 +28,7 @@ trait HasRelation
     }
     protected function hasMany($model, $foreignKey, $otherKey){
         if($this->{$this->primaryKey}){
-            $modelObject = new $model;
+            $modelObject = new $model();
             return $modelObject->getHasManyRelation($this->table, $foreignKey, $otherKey, $this->$otherKey);
         }
     }
@@ -46,7 +46,7 @@ trait HasRelation
 
     protected function belongsTo($model, $foreignKey, $localKey){
         if($this->{$this->primaryKey}){
-            $modelObject = new $model;
+            $modelObject = new $model();
             return $modelObject->getBelongsToRelation($this->table, $foreignKey, $localKey, $this->$foreignKey);
         }
     }
