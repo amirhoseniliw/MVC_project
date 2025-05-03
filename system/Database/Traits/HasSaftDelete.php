@@ -46,8 +46,50 @@ trait HasSoftDelete{
         return null;
     }
 
+    protected function getMethod($array = []){
+        if($this->sql == ''){
+            if(empty($array)){
+                $fields = $this->getTableName().'.*';
+            }
+            else{
+                foreach($array as $key => $field){
+                    $array[$key] = $this->getAttributeName($field);
+                }
+                $fields = implode(' , ', $array);
+            }
+            $this->setSql("SELECT $fields FROM ".$this->getTableName());
+        }
+        $this->setWhere("AND", $this->getAttributeName($this->deletedAt)." IS NULL ");
 
+        $statement = $this->executeQuery();
+        $data = $statement->fetchAll();
+        if ($data){
+           $this->arrayToObjects($data);
+           return $this->collection;
+        }
+        return [];
+    }
 
+    protected function paginateMethod($perPage){
+
+        $totalRows = $this->getCount();
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $totalPages = ceil($totalRows / $perPage);
+        $currentPage = min($currentPage, $totalPages);
+        $currentPage = max($currentPage, 1);
+        $currentRow = ($currentPage - 1) * $perPage;
+        $this->setLimit($currentRow, $perPage);
+        if($this->sql == ''){
+            $this->setSql("SELECT ".$this->getTableName().".* FROM ".$this->getTableName());
+        }
+        $statement = $this->executeQuery();
+        $data = $statement->fetchAll();
+        if ($data){
+           $this->arrayToObjects($data);
+           return $this->collection;
+        }
+        return [];
+    }
 
 
 }
