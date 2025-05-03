@@ -69,9 +69,8 @@ trait HasSoftDelete{
         }
         return [];
     }
-
     protected function paginateMethod($perPage){
-
+        $this->setWhere("AND", $this->getAttributeName($this->deletedAt)." IS NULL ");
         $totalRows = $this->getCount();
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $totalPages = ceil($totalRows / $perPage);
@@ -90,6 +89,7 @@ trait HasSoftDelete{
         }
         return [];
     }
+
 
 
 }
